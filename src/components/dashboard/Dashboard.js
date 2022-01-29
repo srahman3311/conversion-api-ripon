@@ -9,6 +9,7 @@ import styles from "./Dashboard.module.css";
 
 // Components
 import Navbar from "../reuseable-components/navbar/Navbar";
+import Footer from "../reuseable-components/footer/Footer";
 import Header from "../reuseable-components/Header";
 
 
@@ -94,6 +95,8 @@ function Dashboard() {
                 </button>
 
             </main>
+            <Footer />
+
         </>
     );
 

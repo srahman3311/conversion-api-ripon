@@ -11,7 +11,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 function App() {
 
     return (
-        <div className={styles.container}>
+        <div className={styles.App}>
             <Router>
                 <Routes>
                     <Route path="/" element={<Login />} />
