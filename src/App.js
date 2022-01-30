@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styles from "./App.module.css";
 
 // Route Components
-import Login from "./components/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 
 
@@ -14,7 +13,6 @@ function App() {
         <div className={styles.App}>
             <Router>
                 <Routes>
-                    <Route path="/" element={<Login />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                 </Routes>
             </Router>

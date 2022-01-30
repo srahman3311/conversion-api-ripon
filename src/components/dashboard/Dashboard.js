@@ -10,7 +10,8 @@ import styles from "./Dashboard.module.css";
 // Components
 import Navbar from "../reuseable-components/navbar/Navbar";
 import Footer from "../reuseable-components/footer/Footer";
-import Header from "../reuseable-components/Header";
+import Header from "../reuseable-components/others/Header";
+import Button from "../reuseable-components/others/Button";
 
 
 function Dashboard() {
@@ -82,18 +83,22 @@ function Dashboard() {
                         <span className={styles.image_filename}>{ file === null ? "No File Selected" : file.name}</span>
                         <span className={styles.image_upload_button}>Choose File</span>
                     </form>
-                    
                 </div>
-                <button onClick = {convertFile}>Convert</button>
-                <button
+                <Button
+                    text = "Convert"
+                    clickHandler = {convertFile} 
                     style = {{
-                        display: downloadUri ? "inline" : "none"
-                    }} 
-                    onClick = {downloadFile}
-                >
-                    Download File
-                </button>
-
+                        backgroundColor: "darkblue"
+                    }}
+                />
+                <Button
+                    text = "Download"
+                    clickHandler = {downloadFile} 
+                    style = {{
+                        display: downloadUri ? "inline" : "none",
+                        backgroundColor: "darkblue"
+                    }}
+                />
             </main>
             <Footer />
 
