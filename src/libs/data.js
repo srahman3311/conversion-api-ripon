@@ -10,7 +10,7 @@ export const services = [
     {
         id: 2,
         textIcon: "W",
-        textIconColor: "green",
+        textIconColor: "white",
         textIconBackgroundColor: "black",
         title: "PDF To Word",
         description: "Easily convert PDF to word"
@@ -72,4 +72,50 @@ export const services = [
         description: "Easily convert MP4 to MP3"
     },
 
+]
+
+
+export const fileTypes = [
+    {
+        id: 1,
+        title: "PDF",
+        fileExtension: "pdf",
+        possibleConversionFileTypes: "JPG,WORD,POWERPOINT"
+    },
+    {
+        id: 2,
+        title: "JPG",
+        fileExtension: "jpg",
+        possibleConversionFileTypes: "PDF"
+    },
+    {
+        id: 3,
+        title: "WORD",
+        fileExtension: "docx",
+        possibleConversionFileTypes: "PDF"
+    },
+    {
+        id: 4,
+        title: "POWERPOINT",
+        fileExtension: "ppt",
+        possibleConversionFileTypes: "PDF"
+    },
+    {
+        id: 5,
+        title: "EXCEL",
+        fileExtension: "xlsx",
+        possibleConversionFileTypes: "PDF"
+    },
+    {
+        id: 6,
+        title: "HTML",
+        fileExtension: "html",
+        possibleConversionFileTypes: "PDF"
+    },
+    {
+        id: 7,
+        title: "MP4",
+        fileExtension: "mp4",
+        possibleConversionFileTypes: "MP3"
+    }
 ]

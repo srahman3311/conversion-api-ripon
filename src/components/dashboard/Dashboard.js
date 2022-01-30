@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { services } from "../../libs/data";
+import { fileTypes, services } from "../../libs/data";
+
 
 // Important link regarding axios progressbar
 // https://www.codingdeft.com/posts/react-upload-file-progress-bar/
@@ -11,9 +12,11 @@ import styles from "./Dashboard.module.css";
 // Components
 import Navbar from "../reuseable-components/navbar/Navbar";
 import Footer from "../reuseable-components/footer/Footer";
-import Header from "../reuseable-components/others/Header";
+import Header from "../reuseable-components/typography/Header";
+import Paragraph from "../reuseable-components/typography/Paragraph";
 import Button from "../reuseable-components/others/Button";
 import TextIcon from "../reuseable-components/others/TextIcon";
+import DropdownList from "../reuseable-components/others/DropdownList";
 import FileUploader from "../reuseable-components/file-uploader/FileUploader";
 
 
@@ -23,10 +26,68 @@ function Dashboard() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [file, setFile] = useState(null);
+    const [fileFormats, setFileFormats] = useState([]);
+    const [selectableFileFormats, setSelectableFileFormats] = useState([]);
+    const [selectedFileType, setSelectedFileType] = useState("");
+    const [selectedFileTypeExtension, setSelectedFileTypeExtension] = useState("");
     const [targetFileFormat, setTargetFileFormat] = useState(""); 
     const [downloadUri, setDownloadUri] = useState("");
 
 
+    useEffect(() => {
+
+        setFileFormats(fileTypes);
+        if(!selectedFileType) {
+            setSelectedFileType(fileTypes[0].title);
+            setSelectedFileTypeExtension(fileTypes[0].fileExtension)
+        } 
+
+        for(let x = 0; x < fileTypes.length; x++) {
+
+            const fileType = fileTypes[x];
+
+            if(fileType.title === selectedFileType) {
+
+                const newArray = [];
+                const items = fileType.possibleConversionFileTypes.split(",");
+
+                items.forEach((item, index) => {
+                    newArray.push({
+                        id: index + 1,
+                        title: item
+                    })
+                })
+
+                setSelectableFileFormats(newArray);
+                setTargetFileFormat(newArray[0].title)
+                break;
+            }
+        }
+
+    }, [selectedFileType])
+
+    const handleChange = (event) => {
+
+        const { name, value } = event.target;
+
+        if(name === "selectedFileType") {
+
+            for(let x = 0; x < fileTypes.length; x++) {
+
+                const fileType = fileTypes[x];
+    
+                if(fileType.title === value) {
+    
+                    setSelectedFileTypeExtension(fileType.fileExtension);
+                    break;
+                }
+            }
+            
+            return setSelectedFileType(value);
+        } 
+        setTargetFileFormat(value);
+       
+    }
     const fileHandler = event => setFile(event.target.files[0]);
     const downloadFile = () => window.location.href = downloadUri;
 
@@ -34,6 +95,13 @@ function Dashboard() {
     const convertFile = async () => {
 
         if(!file) return alert("Please upload the file");
+
+        const fileExtension = file.name.substring(file.name.indexOf("."), file.name.length);
+
+        if(!fileExtension.includes(selectedFileTypeExtension)) {
+            return alert(`Please upload a ${selectedFileType} file`);
+        }
+        
 
         const imageData = new FormData();
         imageData.append("file", file);
@@ -68,8 +136,8 @@ function Dashboard() {
 
     }
 
-    
 
+    console.log(selectedFileType)
 
     if(loading) return <div>Loading...</div>
     if(error) return <div>Something went wrong</div>
@@ -79,7 +147,41 @@ function Dashboard() {
             <Navbar />
             <main className={styles.dashboard}>
                 <Header text = "Welcome to Conversion API Software" />
+
+                <div className = {styles.select_file_types}>
+                    <p>Convert</p>
+                    <DropdownList 
+                        name = "selectedFileType"
+                        nameKey = "title"
+                        data = {fileFormats}
+                        handleChange = {handleChange}
+                    />
+                    <p>To</p>
+                    <DropdownList 
+                        name = "targetFileFormat"
+                        nameKey = "title"
+                        data = {selectableFileFormats}
+                        handleChange = {handleChange}
+                    
+                    />
+                </div>
+                
                 <FileUploader file = {file} fileHandler = {fileHandler} />
+                <Button
+                    text = "Convert"
+                    clickHandler = {convertFile} 
+                    style = {{
+                        backgroundColor: "darkblue"
+                    }}
+                />
+                <Button
+                    text = "Download"
+                    clickHandler = {downloadFile} 
+                    style = {{
+                        display: downloadUri ? "inline" : "none",
+                        backgroundColor: "darkblue"
+                    }}
+                />
                 <div className = {styles.services}>
                     {
                         services.map((service) => {
@@ -99,28 +201,16 @@ function Dashboard() {
                                             marginBottom: "5px"
                                         }} 
                                     />
-                                    {/* <h2>{service.title}</h2> */}
-                                    <p>{service.description}</p>
+                                    <Paragraph 
+                                        text = {service.description}
+                                    />
+                                
                                 </div>
                             );
                         })
                     }
                 </div>
-                <Button
-                    text = "Convert"
-                    clickHandler = {convertFile} 
-                    style = {{
-                        backgroundColor: "darkblue"
-                    }}
-                />
-                <Button
-                    text = "Download"
-                    clickHandler = {downloadFile} 
-                    style = {{
-                        display: downloadUri ? "inline" : "none",
-                        backgroundColor: "darkblue"
-                    }}
-                />
+               
             </main>
             <Footer />
 

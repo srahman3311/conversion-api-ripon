@@ -1,4 +1,4 @@
-import styles from "./Common.module.css";
+import styles from "./Typography.module.css";
 
 function Header({ text, style }) {
 
