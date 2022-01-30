@@ -1,10 +1,10 @@
 import styles from "./Common.module.css";
 
-function Header({ text }) {
+function Header({ text, style }) {
 
 
     return (
-        <h1 className={styles.header}>{text}</h1>
+        <h1 className={styles.header} style = { style && style }>{text}</h1>
     );
 }
 

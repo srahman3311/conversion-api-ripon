@@ -49,5 +49,23 @@
 }
 
 
+/* Text Icon */
+.text_icon {
+    /* width: 100%;
+    text-align: center; */
+    margin-bottom: 15px;
+}
+
+.text_icon_content {
+    width: 50px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    margin: auto;
+}
+
+
 
 

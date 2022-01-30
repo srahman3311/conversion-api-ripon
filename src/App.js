@@ -13,7 +13,7 @@ function App() {
         <div className={styles.App}>
             <Router>
                 <Routes>
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/" element={<Dashboard />} />
                 </Routes>
             </Router>
         </div>

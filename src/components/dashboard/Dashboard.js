@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { services } from "../../libs/data";
 
 // Important link regarding axios progressbar
 // https://www.codingdeft.com/posts/react-upload-file-progress-bar/
@@ -12,6 +13,8 @@ import Navbar from "../reuseable-components/navbar/Navbar";
 import Footer from "../reuseable-components/footer/Footer";
 import Header from "../reuseable-components/others/Header";
 import Button from "../reuseable-components/others/Button";
+import TextIcon from "../reuseable-components/others/TextIcon";
+import FileUploader from "../reuseable-components/file-uploader/FileUploader";
 
 
 function Dashboard() {
@@ -76,13 +79,32 @@ function Dashboard() {
             <Navbar />
             <main className={styles.dashboard}>
                 <Header text = "Welcome to Conversion API Software" />
-
-                <div className = {styles.file_upload_container}>
-                    <form className = {styles.image_file_input}>
-                        <input type = "file" onChange = {fileHandler} />
-                        <span className={styles.image_filename}>{ file === null ? "No File Selected" : file.name}</span>
-                        <span className={styles.image_upload_button}>Choose File</span>
-                    </form>
+                <FileUploader file = {file} fileHandler = {fileHandler} />
+                <div className = {styles.services}>
+                    {
+                        services.map((service) => {
+                            return (
+                                <div key = {service.id} className = {styles.service_card}>
+                                    <TextIcon 
+                                        text = {service.textIcon} 
+                                        style = {{
+                                            color: service.textIconColor,
+                                            backgroundColor: service.textIconBackgroundColor
+                                        }}
+                                    />
+                                    <Header 
+                                        text = {service.title}
+                                        style = {{
+                                            fontSize: "1.5rem",
+                                            marginBottom: "5px"
+                                        }} 
+                                    />
+                                    {/* <h2>{service.title}</h2> */}
+                                    <p>{service.description}</p>
+                                </div>
+                            );
+                        })
+                    }
                 </div>
                 <Button
                     text = "Convert"
