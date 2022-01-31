@@ -130,14 +130,12 @@ function Dashboard() {
             setError(true);
 
         } finally {
-
+            
             setLoading(false);
         }
 
     }
 
-
-    console.log(selectedFileType)
 
     if(loading) return <div>Loading...</div>
     if(error) return <div>Something went wrong</div>
@@ -147,7 +145,6 @@ function Dashboard() {
             <Navbar />
             <main className={styles.dashboard}>
                 <Header text = "Welcome to Conversion API Software" />
-
                 <div className = {styles.select_file_types}>
                     <p>Convert</p>
                     <DropdownList 
