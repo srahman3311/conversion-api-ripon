@@ -1,5 +1,9 @@
 .dropdown {
-    background-color: aqua;
     width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: green;
+    padding: 4% 0%;
     z-index: 1;
 }

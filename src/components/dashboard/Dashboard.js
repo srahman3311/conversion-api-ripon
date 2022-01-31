@@ -17,6 +17,7 @@ import Paragraph from "../reuseable-components/typography/Paragraph";
 import Button from "../reuseable-components/others/Button";
 import TextIcon from "../reuseable-components/others/TextIcon";
 import DropdownList from "../reuseable-components/others/DropdownList";
+import Dropdown from "../reuseable-components/dropdown/Dropdown";
 import FileUploader from "../reuseable-components/file-uploader/FileUploader";
 import Icon from "../reuseable-components/others/Icon";
 
@@ -152,11 +153,13 @@ function Dashboard() {
                     <div className = {styles.select_conversion_file_type}>
                         <Paragraph text = {selectedFileType} />
                         <Icon iconClassName = "fas fa-chevron-down"/>
+                        <Dropdown data = {fileTypes} nameKey = "title" />
                     </div>
                     <Paragraph text = "To" />
                     <div className = {styles.select_target_file_type}>
                         <Paragraph text = {targetFileFormat} />
                         <Icon iconClassName = "fas fa-chevron-down"/>
+                        <Dropdown data = {selectableFileFormats} nameKey = "title" />
                     </div>
                 </div>
                 <FileUploader file = {file} fileHandler = {fileHandler} />
