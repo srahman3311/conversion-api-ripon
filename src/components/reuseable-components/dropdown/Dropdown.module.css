@@ -1,9 +1,18 @@
 .dropdown {
     width: 100%;
     position: absolute;
-    top: 100%;
+    top: 105%;
     left: 0;
-    background-color: green;
-    padding: 4% 0%;
+    background-color: #1572A1;
+    padding: 10% 0%;
+    border-radius: 4px;
     z-index: 1;
+}
+
+.dropdown_content {
+    padding: 4% 6%;
+}
+
+.dropdown_content:hover {
+    background-color: #FF6363;
 }
