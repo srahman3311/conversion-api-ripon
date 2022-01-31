@@ -28,17 +28,17 @@ function Dashboard() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [file, setFile] = useState(null);
-    const [fileFormats, setFileFormats] = useState([]);
     const [selectableFileFormats, setSelectableFileFormats] = useState([]);
     const [selectedFileType, setSelectedFileType] = useState("");
     const [selectedFileTypeExtension, setSelectedFileTypeExtension] = useState("");
     const [targetFileFormat, setTargetFileFormat] = useState(""); 
     const [downloadUri, setDownloadUri] = useState("");
+    const [showFileTypeDropdown, setShowFileTypeDropdown] = useState(false);
+    const [showTargetFileTypeDropdown, setShowTargetFileTypeDropdown] = useState(false);
 
 
     useEffect(() => {
 
-        setFileFormats(fileTypes);
         if(!selectedFileType) {
             setSelectedFileType(fileTypes[0].title);
             setSelectedFileTypeExtension(fileTypes[0].fileExtension)
@@ -68,34 +68,53 @@ function Dashboard() {
 
     }, [selectedFileType])
 
-    const handleChange = (event) => {
-
-        const { name, value } = event.target;
-
-        if(name === "selectedFileType") {
-
-            for(let x = 0; x < fileTypes.length; x++) {
-
-                const fileType = fileTypes[x];
-    
-                if(fileType.title === value) {
-    
-                    setSelectedFileTypeExtension(fileType.fileExtension);
-                    break;
-                }
-            }
-            
-            return setSelectedFileType(value);
-        } 
-        setTargetFileFormat(value);
-       
-    }
     const fileHandler = event => setFile(event.target.files[0]);
-    const downloadFile = () => window.location.href = downloadUri;
 
-    const selectConversionFileType = event => setSelectedFileType(event.target.textContent);
-    const selectTargetFileType = event => setTargetFileFormat(event.target.textContent);
+    const selectConversionFileType = event => {
 
+        const fileType = event.target.textContent
+
+        setSelectedFileType(fileType);
+
+        for(let x = 0; x < fileTypes.length; x++) {
+
+            const item = fileTypes[x];
+
+            if(item.title === fileType) {
+                setSelectedFileTypeExtension(item.fileExtension);
+                break;
+            }
+        }
+        setShowFileTypeDropdown(false);
+    }
+
+    const selectTargetFileType = event => setTargetFileFormat(event.target.textContent) 
+
+    // Toggle file type dropdown
+    const toggleFileTypeDropdown = () => {
+
+        showFileTypeDropdown ? setShowFileTypeDropdown(false) : setShowFileTypeDropdown(true);
+
+        // Hide target file type dropdown if it was displayed
+        setShowTargetFileTypeDropdown(false);
+
+    }
+
+    // Toggle target file type dropdown
+    const toggleTargetFileTypeDropdown = () => {
+
+        showTargetFileTypeDropdown ? setShowTargetFileTypeDropdown(false) : setShowTargetFileTypeDropdown(true);
+
+        // Hide file type dropdown if it was displayed
+        setShowFileTypeDropdown(false);
+
+    }
+
+    // Hide dropdowns if user click anywhere on the main UI
+    const hideDropdowns = () => {
+        showFileTypeDropdown && setShowFileTypeDropdown(false);
+        showTargetFileTypeDropdown && setShowTargetFileTypeDropdown(false);
+    }
 
     const convertFile = async () => {
 
@@ -141,6 +160,8 @@ function Dashboard() {
 
     }
 
+    const downloadFile = () => window.location.href = downloadUri;
+
 
     if(loading) return <div>Loading...</div>
     if(error) return <div>Something went wrong</div>
@@ -148,28 +169,40 @@ function Dashboard() {
     return (
         <>  
             <Navbar />
-            <main className={styles.dashboard}>
+            <main className={styles.dashboard} onClick = {hideDropdowns}>
                 <Header text = "Welcome to Conversion API Software" />
 
                 <div className = {styles.select_file_types}>
                     <Paragraph text = "Convert" />
-                    <div className = {styles.select_conversion_file_type}>
+                    <div 
+                        className = {styles.select_conversion_file_type}
+                        onClick = {toggleFileTypeDropdown}
+                    >
                         <Paragraph text = {selectedFileType} />
                         <Icon iconClassName = "fas fa-chevron-down"/>
                         <Dropdown 
                             data = {fileTypes} 
                             nameKey = "title" 
                             clickHandler = {selectConversionFileType}
+                            style = {{
+                                display: showFileTypeDropdown ? "block" : "none"
+                            }}
                         />
                     </div>
                     <Paragraph text = "To" />
-                    <div className = {styles.select_target_file_type}>
+                    <div 
+                        className = {styles.select_target_file_type}
+                        onClick = {toggleTargetFileTypeDropdown}
+                    >
                         <Paragraph text = {targetFileFormat} />
                         <Icon iconClassName = "fas fa-chevron-down"/>
                         <Dropdown 
                             data = {selectableFileFormats} 
                             nameKey = "title" 
                             clickHandler = {selectTargetFileType}
+                            style = {{
+                                display: showTargetFileTypeDropdown ? "block" : "none"
+                            }}
                         />
                     </div>
                 </div>
