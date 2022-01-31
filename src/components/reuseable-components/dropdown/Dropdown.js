@@ -1,27 +1,27 @@
 // Stylesheet
 import styles from "./Dropdown.module.css";
 
-// Components
-import Paragraph from "../typography/Paragraph";
-
 
 
 function Dropdown({ data, nameKey, style }) {
 
     return (
         <div className = {styles.dropdown} style = {style && style}>
-            {
-                data.map(item => {
-                    return (
-                        <Paragraph
-                            key = {item.id}
-                            customClassName = {styles.dropdown_content}
-                            text = {item[nameKey]}
-                        />
-                    );
-
-                })
-            }
+            <ul className = {styles.dropdown_content}>
+                {
+                    data.map(item => {
+                        return (
+                            <li 
+                                key = {item.id}
+                                className = {styles.dropdown_content_item}
+                                onClick = {event => console.log(event.target.textContent)}
+                            >
+                                {item[nameKey]}
+                            </li>
+                        );
+                    })
+                }
+            </ul>
         </div>
     );
 

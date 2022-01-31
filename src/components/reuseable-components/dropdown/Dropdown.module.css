@@ -1,7 +1,7 @@
 .dropdown {
     width: 100%;
     position: absolute;
-    top: 105%;
+    top: 120%;
     left: 0;
     background-color: #1572A1;
     padding: 10% 0%;
@@ -10,9 +10,15 @@
 }
 
 .dropdown_content {
+    width: 100%;
+    position: relative;
+    list-style-type: none;
+}
+
+.dropdown_content_item {
     padding: 4% 6%;
 }
 
-.dropdown_content:hover {
+.dropdown_content_item:hover {
     background-color: #FF6363;
 }
