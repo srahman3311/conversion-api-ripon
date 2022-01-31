@@ -93,6 +93,9 @@ function Dashboard() {
     const fileHandler = event => setFile(event.target.files[0]);
     const downloadFile = () => window.location.href = downloadUri;
 
+    const selectConversionFileType = event => setSelectedFileType(event.target.textContent);
+    const selectTargetFileType = event => setTargetFileFormat(event.target.textContent);
+
 
     const convertFile = async () => {
 
@@ -153,13 +156,21 @@ function Dashboard() {
                     <div className = {styles.select_conversion_file_type}>
                         <Paragraph text = {selectedFileType} />
                         <Icon iconClassName = "fas fa-chevron-down"/>
-                        <Dropdown data = {fileTypes} nameKey = "title" />
+                        <Dropdown 
+                            data = {fileTypes} 
+                            nameKey = "title" 
+                            clickHandler = {selectConversionFileType}
+                        />
                     </div>
                     <Paragraph text = "To" />
                     <div className = {styles.select_target_file_type}>
                         <Paragraph text = {targetFileFormat} />
                         <Icon iconClassName = "fas fa-chevron-down"/>
-                        <Dropdown data = {selectableFileFormats} nameKey = "title" />
+                        <Dropdown 
+                            data = {selectableFileFormats} 
+                            nameKey = "title" 
+                            clickHandler = {selectTargetFileType}
+                        />
                     </div>
                 </div>
                 <FileUploader file = {file} fileHandler = {fileHandler} />

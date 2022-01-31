@@ -3,7 +3,7 @@ import styles from "./Dropdown.module.css";
 
 
 
-function Dropdown({ data, nameKey, style }) {
+function Dropdown({ data, nameKey, style, clickHandler }) {
 
     return (
         <div className = {styles.dropdown} style = {style && style}>
@@ -14,7 +14,7 @@ function Dropdown({ data, nameKey, style }) {
                             <li 
                                 key = {item.id}
                                 className = {styles.dropdown_content_item}
-                                onClick = {event => console.log(event.target.textContent)}
+                                onClick = {clickHandler}
                             >
                                 {item[nameKey]}
                             </li>
