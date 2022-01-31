@@ -18,6 +18,7 @@ import Button from "../reuseable-components/others/Button";
 import TextIcon from "../reuseable-components/others/TextIcon";
 import DropdownList from "../reuseable-components/others/DropdownList";
 import FileUploader from "../reuseable-components/file-uploader/FileUploader";
+import Icon from "../reuseable-components/others/Icon";
 
 
 function Dashboard() {
@@ -130,7 +131,7 @@ function Dashboard() {
             setError(true);
 
         } finally {
-            
+
             setLoading(false);
         }
 
@@ -145,24 +146,19 @@ function Dashboard() {
             <Navbar />
             <main className={styles.dashboard}>
                 <Header text = "Welcome to Conversion API Software" />
+
                 <div className = {styles.select_file_types}>
-                    <p>Convert</p>
-                    <DropdownList 
-                        name = "selectedFileType"
-                        nameKey = "title"
-                        data = {fileFormats}
-                        handleChange = {handleChange}
-                    />
-                    <p>To</p>
-                    <DropdownList 
-                        name = "targetFileFormat"
-                        nameKey = "title"
-                        data = {selectableFileFormats}
-                        handleChange = {handleChange}
-                    
-                    />
+                    <Paragraph text = "Convert" />
+                    <div className = {styles.select_conversion_file_type}>
+                        <Paragraph text = {selectedFileType} />
+                        <Icon iconClassName = "fas fa-chevron-down"/>
+                    </div>
+                    <Paragraph text = "To" />
+                    <div className = {styles.select_target_file_type}>
+                        <Paragraph text = {targetFileFormat} />
+                        <Icon iconClassName = "fas fa-chevron-down"/>
+                    </div>
                 </div>
-                
                 <FileUploader file = {file} fileHandler = {fileHandler} />
                 <Button
                     text = "Convert"
