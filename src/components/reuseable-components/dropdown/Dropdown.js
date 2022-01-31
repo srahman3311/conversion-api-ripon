@@ -14,7 +14,7 @@ function Dropdown({ data, nameKey, style }) {
                 data.map(item => {
                     return (
                         <Paragraph
-                            key = {item.id} 
+                            key = {item.id}
                             customClassName = {styles.dropdown_content}
                             text = {item[nameKey]}
                         />
