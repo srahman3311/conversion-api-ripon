@@ -1,8 +1,13 @@
 
-function Paragraph({ text, style }) {
+function Paragraph({ customClassName, text, style }) {
 
     return (
-        <p style = {style && style}>{text}</p>
+        <p 
+            className = {customClassName} 
+            style = {style && style}
+        >
+            {text}
+        </p>
     );
 
 }

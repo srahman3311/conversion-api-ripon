@@ -13,6 +13,7 @@ function Dropdown({ data, nameKey, style }) {
                     return (
                         <Paragraph
                             key = {item.id} 
+                            customClassName = {styles.dropdown_content}
                             text = {item[nameKey]}
                         />
                     );
