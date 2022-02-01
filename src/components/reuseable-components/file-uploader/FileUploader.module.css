@@ -1,9 +1,9 @@
 .file_upload_container {
     width: 50%;
     padding: 5%;
-    background-color: aqua;
     position: relative;
-    margin: auto;
+    margin: 30px auto 30px auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .image_file_input {

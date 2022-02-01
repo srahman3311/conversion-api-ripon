@@ -20,11 +20,14 @@ import DropdownList from "../reuseable-components/others/DropdownList";
 import Dropdown from "../reuseable-components/dropdown/Dropdown";
 import FileUploader from "../reuseable-components/file-uploader/FileUploader";
 import Icon from "../reuseable-components/others/Icon";
+import Loading from "../reuseable-components/others/Loading";
+import ProgressBar from "../reuseable-components/others/ProgressBar";
 
 
 function Dashboard() {
 
 
+    const [uploadProgress, setUploadProgress] = useState(0);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [file, setFile] = useState(null);
@@ -131,22 +134,21 @@ function Dashboard() {
         imageData.append("file", file);
 
         const endpoint = "http://localhost:5050/convert";
+
         const config = {
             maxContentLength: Infinity,
             maxBodyLength: Infinity, 
             onUploadProgress: ProgressEvent => {
                 const {loaded, total} = ProgressEvent;
-                let percent = Math.floor(loaded * 100 / total)
-                console.log('tes get value for progress upload : ',`${loaded} kb of ${total} kb | ${percent}%`)
+                let percent = Math.floor(loaded * 100 / total);
+                setUploadProgress(percent);
             }
         }
 
         try {
-
             setLoading(true);
 
             const response = await axios.post(endpoint, imageData, config);
-    
             setDownloadUri(response.data);
 
         } catch(error) {
@@ -154,16 +156,16 @@ function Dashboard() {
             setError(true);
 
         } finally {
-
+            
             setLoading(false);
+            setUploadProgress(0);
+            
         }
 
     }
 
     const downloadFile = () => window.location.href = downloadUri;
 
-
-    if(loading) return <div>Loading...</div>
     if(error) return <div>Something went wrong</div>
 
     return (
@@ -207,10 +209,31 @@ function Dashboard() {
                     </div>
                 </div>
                 <FileUploader file = {file} fileHandler = {fileHandler} />
+
+                <section 
+                    className = {styles.uploading_converting_progress} 
+                    style = {{ display: loading ? "block" : "none" }}
+                >
+                    <ProgressBar 
+                        progress = {uploadProgress} 
+                        style={{
+                            display: uploadProgress > 0 && uploadProgress < 100 ? "flex" : "none"
+                        }}
+                    />
+                    <Loading
+                        text = "Converting...." 
+                        style = {{
+                            display: uploadProgress === 100 ? "flex" : "none",
+                            height: "100%"
+                        }}
+                    />
+                </section>
+               
                 <Button
                     text = "Convert"
                     clickHandler = {convertFile} 
                     style = {{
+                        display: file ? "inline-block" : "none",
                         backgroundColor: "darkblue"
                     }}
                 />
