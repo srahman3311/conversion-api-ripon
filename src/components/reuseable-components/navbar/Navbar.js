@@ -8,11 +8,11 @@ function Navbar() {
     return (
         <nav className = {styles.navbar}>
             <div className = {styles.navbar_brand}>
-                <Link to ="/dashboard">Conversion API</Link>
+                <Link to ="/">Convert Imagination</Link>
             </div>
             <div className="">
-                <Link to ="/dashboard">Signup</Link>
-                <Link to ="/dashboard">Login</Link>
+                <Link to ="/">Signup</Link>
+                <Link to ="/">Login</Link>
             </div>
         </nav>
     );
