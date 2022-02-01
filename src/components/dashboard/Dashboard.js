@@ -130,8 +130,9 @@ function Dashboard() {
         }
         
 
-        const imageData = new FormData();
-        imageData.append("file", file);
+        const data = new FormData();
+        data.append("file", file);
+        data.append("targetFileFormat", targetFileFormat);
 
         const endpoint = "http://localhost:5050/convert";
 
@@ -148,7 +149,7 @@ function Dashboard() {
         try {
             setLoading(true);
 
-            const response = await axios.post(endpoint, imageData, config);
+            const response = await axios.post(endpoint, data, config);
             setDownloadUri(response.data);
 
         } catch(error) {
@@ -159,7 +160,7 @@ function Dashboard() {
             
             setLoading(false);
             setUploadProgress(0);
-            
+
         }
 
     }
