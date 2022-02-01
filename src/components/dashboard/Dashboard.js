@@ -173,42 +173,73 @@ function Dashboard() {
         <>  
             <Navbar />
             <main className={styles.dashboard} onClick = {hideDropdowns}>
-                <Header text = "Welcome to Conversion API Software" />
 
-                <div className = {styles.select_file_types}>
-                    <Paragraph text = "Convert" />
-                    <div 
-                        className = {styles.select_conversion_file_type}
-                        onClick = {toggleFileTypeDropdown}
-                    >
-                        <Paragraph text = {selectedFileType} />
-                        <Icon iconClassName = "fas fa-chevron-down"/>
-                        <Dropdown 
-                            data = {fileTypes} 
-                            nameKey = "title" 
-                            clickHandler = {selectConversionFileType}
-                            style = {{
-                                display: showFileTypeDropdown ? "block" : "none"
-                            }}
-                        />
+                <section className = {styles.welcome}>
+                    <div className = {styles.welcome_content}>
+                        <div className = {styles.welcome_text_container}>
+                            <div className = {styles.welcome_text}>
+                                <Header 
+                                    text = "Convert Your Imagination" 
+                                    style = {{
+                                        marginBottom: "10px",
+                                        textAlign: "left",
+                                        color: "white"
+                                    }}
+                                />
+                                <Paragraph 
+                                    text = {
+                                        `We let you convert files online with ease.
+                                        Just select your conversion and target file types from the dropdown 
+                                        and hit convert. That's it. You can now download your file and do
+                                        whatever you want with it.`
+                                    }
+                                    style = {{
+                                        color: "white"
+                                    }}
+                                />
+                            </div>
+                        </div>
+                
+                        <div className = {styles.select_file_types_container}>
+                            <div className = {styles.select_file_types}>
+                                <Paragraph text = "Convert" />
+                                <div 
+                                    className = {styles.select_conversion_file_type}
+                                    onClick = {toggleFileTypeDropdown}
+                                >
+                                    <Paragraph text = {selectedFileType} />
+                                    <Icon iconClassName = "fas fa-chevron-down"/>
+                                    <Dropdown 
+                                        data = {fileTypes} 
+                                        nameKey = "title" 
+                                        clickHandler = {selectConversionFileType}
+                                        style = {{
+                                            display: showFileTypeDropdown ? "block" : "none",
+                                            backgroundColor: "#35858B"
+                                        }}
+                                    />
+                                </div>
+                                <Paragraph text = "To" />
+                                <div 
+                                    className = {styles.select_target_file_type}
+                                    onClick = {toggleTargetFileTypeDropdown}
+                                >
+                                    <Paragraph text = {targetFileFormat} />
+                                    <Icon iconClassName = "fas fa-chevron-down"/>
+                                    <Dropdown 
+                                        data = {selectableFileFormats} 
+                                        nameKey = "title" 
+                                        clickHandler = {selectTargetFileType}
+                                        style = {{
+                                            display: showTargetFileTypeDropdown ? "block" : "none",
+                                            backgroundColor: "#35858B"
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <Paragraph text = "To" />
-                    <div 
-                        className = {styles.select_target_file_type}
-                        onClick = {toggleTargetFileTypeDropdown}
-                    >
-                        <Paragraph text = {targetFileFormat} />
-                        <Icon iconClassName = "fas fa-chevron-down"/>
-                        <Dropdown 
-                            data = {selectableFileFormats} 
-                            nameKey = "title" 
-                            clickHandler = {selectTargetFileType}
-                            style = {{
-                                display: showTargetFileTypeDropdown ? "block" : "none"
-                            }}
-                        />
-                    </div>
-                </div>
+                </section>
                 <FileUploader file = {file} fileHandler = {fileHandler} />
 
                 <section 
