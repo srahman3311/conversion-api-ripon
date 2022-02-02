@@ -7,12 +7,14 @@ function Navbar() {
 
     return (
         <nav className = {styles.navbar}>
-            <div className = {styles.navbar_brand}>
-                <Link to ="/">Convert Imagination</Link>
-            </div>
-            <div className="">
-                <Link to ="/">Signup</Link>
-                <Link to ="/">Login</Link>
+            <div className = {styles.navbar_content}>
+                <div className = {styles.navbar_brand}>
+                    <Link to ="/">Convert Imagination</Link>
+                </div>
+                <div className = {styles.navbar_routes}>
+                    <Link to ="/">Signup</Link>
+                    <Link to ="/">Login</Link>
+                </div>
             </div>
         </nav>
     );

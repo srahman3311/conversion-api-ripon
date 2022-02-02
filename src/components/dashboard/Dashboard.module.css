@@ -1,7 +1,6 @@
 .welcome {
   width: 100%;
   background-color: #219F94;
-  padding: 2%;
   margin: auto;
 }
 
@@ -10,8 +9,7 @@
   display: flex;
   align-items: center;
   margin: auto;
-  padding: 5% 0%;
-
+  padding: 7% 0%; 
 }
 
 .welcome_content > * {
@@ -26,6 +24,7 @@
 
 .welcome_text {
   width: 80%;
+
 }
 
 .select_file_types {

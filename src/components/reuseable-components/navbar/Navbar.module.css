@@ -1,16 +1,29 @@
 .navbar {
+    width: 100%;
+    background-color: #35858B;
+    padding: 1% 0%;
+}
+
+.navbar_content {
+    width: 90%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.733);
-    padding: 0.5% 3%;
+    margin: auto;
 }
 
 .navbar a {
     text-decoration: none;
     color: white;
-    padding: 10px;
     font-size: 1.2rem;
+}
+
+.navbar a:hover {
+    color: black;
+}
+
+.navbar_routes a:first-child {
+    margin-right: 20px;
 }
 
 .navbar_brand a {
