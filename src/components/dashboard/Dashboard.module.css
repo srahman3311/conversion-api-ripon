@@ -58,17 +58,22 @@
 }
 
 .services {
+  width: 100%;
+  background-color: #54bab828;
+}
+
+.services_content {
   width: 90%;
   display: flex;
   flex-wrap: wrap;
-  margin: 20px auto;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin: auto;
+  padding: 2% 0%;
 }
 
 .service_card {
   width: 25%;
   text-align: center;
-  border: 0.2px solid rgba(0, 0, 0, 0.055);
+  border: 0.2px solid rgba(0, 0, 0, 0.04);
   padding: 30px 10px;
 }
 

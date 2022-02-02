@@ -278,32 +278,34 @@ function Dashboard() {
                     }}
                 />
                 <div className = {styles.services}>
-                    {
-                        services.map((service) => {
-                            return (
-                                <div key = {service.id} className = {styles.service_card}>
-                                    <TextIcon 
-                                        text = {service.textIcon} 
-                                        style = {{
-                                            color: service.textIconColor,
-                                            backgroundColor: service.textIconBackgroundColor
-                                        }}
-                                    />
-                                    <Header 
-                                        text = {service.title}
-                                        style = {{
-                                            fontSize: "1.5rem",
-                                            marginBottom: "5px"
-                                        }} 
-                                    />
-                                    <Paragraph 
-                                        text = {service.description}
-                                    />
-                                
-                                </div>
-                            );
-                        })
-                    }
+                    <div className = {styles.services_content}>
+                        {
+                            services.map((service) => {
+                                return (
+                                    <div key = {service.id} className = {styles.service_card}>
+                                        <TextIcon 
+                                            text = {service.textIcon} 
+                                            style = {{
+                                                color: "white",
+                                                backgroundColor: service.textIconBackgroundColor
+                                            }}
+                                        />
+                                        <Header 
+                                            text = {service.title}
+                                            style = {{
+                                                fontSize: "1.5rem",
+                                                marginBottom: "5px"
+                                            }} 
+                                        />
+                                        <Paragraph 
+                                            text = {service.description}
+                                        />
+                                    
+                                    </div>
+                                );
+                            })
+                        }
+                    </div>
                 </div>
                
             </main>
