@@ -50,13 +50,62 @@
   cursor: pointer;
 }
 
-.uploading_converting_progress {
-  width: 30%;
-  height: 40px;
-  margin: auto;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+
+
+/* Section Convert */
+.convert {
+  width: 100%;
+  padding: 2% 5%;
 }
 
+.uploaded_filename_progress {
+  min-width: 70%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+}
+
+.uploaded_filename_progress > * {
+  height: 40px;
+  padding: 0.5% 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filename {
+  width: 40%;
+  justify-content: flex-start;
+}
+
+.convert_to {
+  width: 20%;
+}
+
+.progress {
+  width: 30%;
+  justify-content: flex-start;
+}
+
+.close_button {
+  width: 10%;
+  padding: 0 1%;
+  justify-content: flex-end;
+}
+
+.convert_downlaod_button {
+  min-width: 90%;
+  text-align: center;
+  padding: 2% 0%;
+}
+
+
+
+
+
+/* Section Services */
 .services {
   width: 100%;
   background-color: #54bab828;
@@ -102,6 +151,37 @@
 
   .select_conversion_file_type, .select_target_file_type {
     width: 35%;
+  }
+
+  .convert {
+    padding: 10% 5%;
+  }
+
+  .uploaded_filename_progress {
+    width: 100%;
+    display: block;
+  }
+
+  .uploaded_filename_progress > * {
+    width: 100%;
+    /* display: block; */
+    margin-bottom: 20px;
+  }
+
+  .filename {
+    justify-content: center;
+  }
+
+  .convert_to {
+    width: 100%;
+    justify-content: center;
+    /* display: flex; */
+    /* background-color: gray; */
+  }
+
+  .close_button {
+    width: 100%;
+    justify-content: center;
   }
   
 }

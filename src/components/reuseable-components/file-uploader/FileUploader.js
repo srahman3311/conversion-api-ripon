@@ -1,18 +1,27 @@
+import { useRef } from "react";
+
 // STylesheet
 import styles from "./FileUploader.module.css";
 
-function FileUploader({ file, fileHandler }) {
 
+function FileUploader({ fileHandler, style }) {
+
+    const inputFile = useRef(null); 
+    const clickInputFile = () => inputFile.current.click();
+
+ 
     return (
-        <div className = {styles.file_upload_container}>
-            <form className = {styles.image_file_input}>
-                <input type = "file" onChange = {fileHandler} />
-                <span className={styles.image_filename}>{ file === null ? "No File Selected" : file.name}</span>
-                <span className={styles.image_upload_button}>Choose File</span>
+        <div className = {styles.file_uploader} style = {style && style}>
+            <form>
+                <input 
+                    type = "file" 
+                    ref = {inputFile}
+                    onChange = {fileHandler}
+                />
+                <span to = "" onClick = {clickInputFile}>Upload File</span>
             </form>
         </div>
     );
-
 }
 
 

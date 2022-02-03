@@ -27,17 +27,33 @@ import ProgressBar from "../reuseable-components/others/ProgressBar";
 function Dashboard() {
 
 
-    const [uploadProgress, setUploadProgress] = useState(0);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    const [file, setFile] = useState(null);
+    // If uploaded file's name is too long, show it to user shortened it inside fileHanlder function
+    const [filename, setFilename] = useState("");
+
+    // Loading, error and upload progress states
+    const [waiting, setWaiting] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [file, setFile] = useState(null);
+    const [uploadProgress, setUploadProgress] = useState(0);
+
+    // Selectable and target file formats
+    const [targetFileFormat, setTargetFileFormat] = useState(""); 
     const [selectableFileFormats, setSelectableFileFormats] = useState([]);
+
+    // Selected file type and it's file extension
     const [selectedFileType, setSelectedFileType] = useState("");
     const [selectedFileTypeExtension, setSelectedFileTypeExtension] = useState("");
-    const [targetFileFormat, setTargetFileFormat] = useState(""); 
-    const [downloadUri, setDownloadUri] = useState("");
+
+    // Dropdown displaying conditions
     const [showFileTypeDropdown, setShowFileTypeDropdown] = useState(false);
     const [showTargetFileTypeDropdown, setShowTargetFileTypeDropdown] = useState(false);
+    
+    // Download URI
+    const [downloadUri, setDownloadUri] = useState("");
+   
 
 
     useEffect(() => {
@@ -71,7 +87,28 @@ function Dashboard() {
 
     }, [selectedFileType])
 
-    const fileHandler = event => setFile(event.target.files[0]);
+    const fileHandler = event => {
+
+        const newFile = event.target.files[0]
+        setFile(newFile);
+
+        // If uploaded file's name is too long, need to shorten it to show to the user
+        let newFilename = newFile.name;
+        const dotIndex = newFilename.indexOf(".");
+        const maxTextLength = windowWidth < 800 ? 30 : 50;
+
+        if(newFilename.length >= maxTextLength) {
+            newFilename = `${newFilename.substring(0, maxTextLength - 10)}... ${newFilename.substring(dotIndex, newFilename.length)}`
+        }
+
+        setFilename(newFilename);
+    } 
+
+    const cancelFileUpload = () => {
+        setFile(null);
+        setFilename("");
+        setDownloadUri("");
+    }
 
     const selectConversionFileType = event => {
 
@@ -134,8 +171,10 @@ function Dashboard() {
         data.append("file", file);
         data.append("targetFileFormat", targetFileFormat);
 
-        //const endpoint = "http://localhost:5050/convert";
+        // const endpoint = "http://localhost:5050/convert";
         const endpoint = "https://afternoon-chamber-07941.herokuapp.com/convert"
+
+        setWaiting(true);
 
         const config = {
             maxContentLength: Infinity,
@@ -148,6 +187,7 @@ function Dashboard() {
         }
 
         try {
+            setWaiting(false);
             setLoading(true);
 
             const response = await axios.post(endpoint, data, config);
@@ -156,6 +196,7 @@ function Dashboard() {
         } catch(error) {
 
             setError(true);
+            alert(error.response.data)
 
         } finally {
             
@@ -168,7 +209,11 @@ function Dashboard() {
 
     const downloadFile = () => window.location.href = downloadUri;
 
-    if(error) return <div>Something went wrong</div>
+  
+
+    window.addEventListener("resize", () => setWindowWidth(window.innerWidth))
+
+
 
     return (
         <>  
@@ -241,44 +286,94 @@ function Dashboard() {
                         </div>
                     </div>
                 </section>
-                <FileUploader file = {file} fileHandler = {fileHandler} />
+                <section className = {styles.convert}>
+                    <div className = {styles.convert_content}>
+                        <FileUploader 
+                            fileHandler = {fileHandler} 
+                            style = {{
+                                display: !file ? "block" : "none",
+                                width: "150px",
+                                // To center the filen uploader button
+                                margin: "auto",
+                                borderRadius: "10px"
+                            }}
+                        />
+                        <div 
+                            className = {styles.uploaded_filename_progress} 
+                            style = {{ 
+                                display: file ? (windowWidth <= 800 ? "block" : "flex") : "none" 
+                            }}
+                        >
+                            <div className = {styles.filename}>
+                                <Paragraph text = {filename} />
+                            </div>
+                            <div className = {styles.convert_to}>
+                                <Paragraph 
+                                    text = "Convert to"
+                                    style = {{ marginRight: "5px" }}
+                                />
+                                <Paragraph 
+                                    text = {targetFileFormat}
+                                    style = {{
+                                        padding: "4px",
+                                        border: "1px solid gray"
+                                    }}
+                                />
+                            </div>
+                            <div className = {styles.progress}>
+                                <ProgressBar 
+                                    text = "Uploading"
+                                    progress = {uploadProgress} 
+                                    style = {{
+                                        display: uploadProgress > 0 && uploadProgress < 100 ? "flex" : "none",
+                                        height: "20px"
+                                    }}
+                                />
+                                <Loading
+                                    text = "Converting" 
+                                    style = {{
+                                        display: uploadProgress === 100 || waiting ? "flex" : "none",
+                                        height: "100%"
+                                    }}
+                                />
+                            </div>
+                            <div className = {styles.close_button}>
+                                <Button 
+                                    text = "X"
+                                    clickHandler = {cancelFileUpload} 
+                                    style = {{
+                                        textAlign: windowWidth <= 800 ? "center" : "right",
+                                        background: "none",
+                                        color: "black",
+                                        fontSize: "1.4rem"
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className = {styles.convert_downlaod_button} style = {{ display: file ? "block" : "none" }}>
+                            <Button
+                                text = "Convert"
+                                clickHandler = {convertFile} 
+                                style = {{ 
+                                    backgroundColor: "#FF6464",
+                                    width: windowWidth <= 800 && "100px"
+                                }}
+                            />
+                            <Button
+                                text = "Download"
+                                clickHandler = {downloadFile} 
+                                style = {{
+                                    display: downloadUri ? "inline" : "none",
+                                    backgroundColor: "#064635",
+                                    width: windowWidth <= 800 && "100px",
+                                    marginLeft: "30px"
+                                }}
+                            />
+                        </div>
+                    </div>
 
-                <section 
-                    className = {styles.uploading_converting_progress} 
-                    style = {{ display: loading ? "block" : "none" }}
-                >
-                    <ProgressBar 
-                        progress = {uploadProgress} 
-                        style={{
-                            display: uploadProgress > 0 && uploadProgress < 100 ? "flex" : "none"
-                        }}
-                    />
-                    <Loading
-                        text = "Converting...." 
-                        style = {{
-                            display: uploadProgress === 100 ? "flex" : "none",
-                            height: "100%"
-                        }}
-                    />
                 </section>
-               
-                <Button
-                    text = "Convert"
-                    clickHandler = {convertFile} 
-                    style = {{
-                        display: file ? "inline-block" : "none",
-                        backgroundColor: "darkblue"
-                    }}
-                />
-                <Button
-                    text = "Download"
-                    clickHandler = {downloadFile} 
-                    style = {{
-                        display: downloadUri ? "inline" : "none",
-                        backgroundColor: "darkblue"
-                    }}
-                />
-                <div className = {styles.services}>
+                <section className = {styles.services}>
                     <div className = {styles.services_content}>
                         {
                             services.map((service) => {
@@ -307,7 +402,7 @@ function Dashboard() {
                             })
                         }
                     </div>
-                </div>
+                </section>
                
             </main>
             <Footer />
