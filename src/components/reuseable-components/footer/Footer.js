@@ -5,7 +5,7 @@ function Footer() {
 
     return (
         <footer className = {styles.footer}>
-            <p>Copyright@Conversion API 2022</p>
+            <p>Copyright @ Convert Imagination 2022</p>
         </footer>
     );
 

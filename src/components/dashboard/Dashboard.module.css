@@ -183,5 +183,13 @@
     width: 100%;
     justify-content: center;
   }
+
+  .services {
+    padding: 4% 1%;
+  }
+
+  .service_card {
+    width: 100%;
+  }
   
 }
