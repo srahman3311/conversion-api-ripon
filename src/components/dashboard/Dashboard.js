@@ -102,6 +102,10 @@ function Dashboard() {
         }
 
         setFilename(newFilename);
+
+        // Chrome issue - Upload the same file twice doesn't work if we don't explicitly set event.target.value to empty
+        // string at the end of the onChange handler(this fileHandler function is the onChange handler)
+        event.target.value = "";
     } 
 
     const cancelFileUpload = () => {
