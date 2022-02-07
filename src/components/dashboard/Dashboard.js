@@ -378,6 +378,24 @@ function Dashboard() {
 
                 </section>
                 <section className = {styles.services}>
+                    <Header 
+                        text = "Services" 
+                        style = {{
+                            width: "100%",
+                            margin: "0",
+                            padding: "10px 0px 5px 0px",
+                        }}
+                    />
+                    <Paragraph 
+                        text = {`Lorem Ipsum is simply dummy text of the printing and typesetting 
+                        industry. Lorem Ipsum has been the industry's standard dummy text ever since the 
+                        1500s, when an unknown printer took a galley`} 
+                        style = {{
+                            width: "50%",
+                            textAlign: "center",
+                            margin: "0 auto 30px auto"
+                        }}
+                    />
                     <div className = {styles.services_content}>
                         {
                             services.map((service) => {
@@ -387,7 +405,8 @@ function Dashboard() {
                                             text = {service.textIcon} 
                                             style = {{
                                                 color: "white",
-                                                backgroundColor: service.textIconBackgroundColor
+                                                backgroundColor: service.textIconBackgroundColor,
+                                                borderRadius: "4px"
                                             }}
                                         />
                                         <Header 
