@@ -204,3 +204,11 @@
   }
   
 }
+
+@media((min-width: 800px) and (max-width: 1200px)) {
+
+  .service_card {
+    width: 50%;
+  }
+
+}
