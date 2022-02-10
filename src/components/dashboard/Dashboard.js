@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { fileTypes, services } from "../../libs/data";
 
-
 // Important link regarding axios progressbar
 // https://www.codingdeft.com/posts/react-upload-file-progress-bar/
 
@@ -15,11 +14,10 @@ import Footer from "../reuseable-components/footer/Footer";
 import Header from "../reuseable-components/typography/Header";
 import Paragraph from "../reuseable-components/typography/Paragraph";
 import Button from "../reuseable-components/others/Button";
+import Icon from "../reuseable-components/others/Icon";
 import TextIcon from "../reuseable-components/others/TextIcon";
-import DropdownList from "../reuseable-components/others/DropdownList";
 import Dropdown from "../reuseable-components/dropdown/Dropdown";
 import FileUploader from "../reuseable-components/file-uploader/FileUploader";
-import Icon from "../reuseable-components/others/Icon";
 import Loading from "../reuseable-components/others/Loading";
 import ProgressBar from "../reuseable-components/others/ProgressBar";
 
@@ -33,10 +31,10 @@ function Dashboard() {
     // If uploaded file's name is too long, show it to user shortened it inside fileHanlder function
     const [filename, setFilename] = useState("");
 
-    // Loading, error and upload progress states
-    const [waiting, setWaiting] = useState(false);
+    // We need to hide convert button after user clicks on it
+    const [showConvertButton, setShowConvertButton] = useState(false);
+    // Based on loading and uploadProgress states we will display upload, convert progress to the user
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
 
     // Selectable and target file formats
@@ -58,11 +56,16 @@ function Dashboard() {
 
     useEffect(() => {
 
+        // If user hasn't selected any file type yet then update the file type and it's extension states with the first
+        // item's file type title and it's extension
         if(!selectedFileType) {
             setSelectedFileType(fileTypes[0].title);
             setSelectedFileTypeExtension(fileTypes[0].fileExtension)
         } 
 
+        // This loop will run whenever user selects a file type to show him/her the selectable file formats. For example -
+        // if user select PDF from the dropdown as the file type then we only must show available target file formats. There
+        // are three selectable file formats for PDF - JPG, WORD and POWERPOINT
         for(let x = 0; x < fileTypes.length; x++) {
 
             const fileType = fileTypes[x];
@@ -87,6 +90,8 @@ function Dashboard() {
 
     }, [selectedFileType])
 
+
+
     const fileHandler = event => {
 
         const newFile = event.target.files[0]
@@ -102,11 +107,13 @@ function Dashboard() {
         }
 
         setFilename(newFilename);
+        setShowConvertButton(true);
 
         // Chrome issue - Upload the same file twice doesn't work if we don't explicitly set event.target.value to empty
         // string at the end of the onChange handler(this fileHandler function is the onChange handler)
         event.target.value = "";
     } 
+
 
     const cancelFileUpload = () => {
         setFile(null);
@@ -120,6 +127,7 @@ function Dashboard() {
 
         setSelectedFileType(fileType);
 
+        // And we need to check selected file type's extension against uploaded file's extension
         for(let x = 0; x < fileTypes.length; x++) {
 
             const item = fileTypes[x];
@@ -129,6 +137,8 @@ function Dashboard() {
                 break;
             }
         }
+
+        // After updating selected file and it's extension states hide the file type dropdown
         setShowFileTypeDropdown(false);
     }
 
@@ -162,23 +172,26 @@ function Dashboard() {
 
     const convertFile = async () => {
 
-        if(!file) return alert("Please upload the file");
-
+        // Get the file extension from the uploaded file 
         const fileExtension = file.name.substring(file.name.indexOf("."), file.name.length);
 
+        // Now check here if uploaded file's extension matches with selected file type's extension. For example - if 
+        // uploaded file's extension is .pdf and selected file type's extension is not pdf then alert user 
+        // with an error message
         if(!fileExtension.includes(selectedFileTypeExtension)) {
             return alert(`Please upload a ${selectedFileType} file`);
         }
-        
+
+        // After user clicks on convert button, hide it
+        setShowConvertButton(false);
+
 
         const data = new FormData();
         data.append("file", file);
         data.append("targetFileFormat", targetFileFormat);
 
-        // const endpoint = "http://localhost:5050/convert";
-        const endpoint = "https://afternoon-chamber-07941.herokuapp.com/convert"
-
-        setWaiting(true);
+        //const endpoint = "http://localhost:5050/convert";
+        const endpoint = "https://afternoon-chamber-07941.herokuapp.com/convert";
 
         const config = {
             maxContentLength: Infinity,
@@ -191,30 +204,23 @@ function Dashboard() {
         }
 
         try {
-            setWaiting(false);
+
             setLoading(true);
 
             const response = await axios.post(endpoint, data, config);
             setDownloadUri(response.data);
 
         } catch(error) {
-
-            setError(true);
             alert(error.response.data)
 
         } finally {
-            
             setLoading(false);
             setUploadProgress(0);
-
         }
 
     }
 
     const downloadFile = () => window.location.href = downloadUri;
-
-  
-
     window.addEventListener("resize", () => setWindowWidth(window.innerWidth))
 
 
@@ -325,6 +331,14 @@ function Dashboard() {
                                 />
                             </div>
                             <div className = {styles.progress}>
+                                <div 
+                                    className = {styles.waiting_to_upload} 
+                                    style = {{ 
+                                        display: loading && uploadProgress <= 1 ? "flex" : "none" 
+                                    }}
+                                >
+                                    Waiting to upload....
+                                </div>
                                 <ProgressBar 
                                     text = "Uploading"
                                     progress = {uploadProgress} 
@@ -334,9 +348,9 @@ function Dashboard() {
                                     }}
                                 />
                                 <Loading
-                                    text = "Converting" 
+                                    text = "Converting...." 
                                     style = {{
-                                        display: uploadProgress === 100 || waiting ? "flex" : "none",
+                                        display: uploadProgress === 100 ? "flex" : "none",
                                         height: "100%"
                                     }}
                                 />
@@ -359,6 +373,7 @@ function Dashboard() {
                                 text = "Convert"
                                 clickHandler = {convertFile} 
                                 style = {{ 
+                                    display: showConvertButton ? "inline-block" : "none",
                                     backgroundColor: "#FF6464",
                                     width: windowWidth <= 800 && "100px"
                                 }}
