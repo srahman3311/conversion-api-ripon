@@ -172,6 +172,9 @@ function Dashboard() {
 
     const convertFile = async () => {
 
+        // 1 MB equals 1000000 bytes. If file size is more than 500 MB then alert user with an error message
+        if((file.size / 1000000) > 500) return alert("file size can't exceed 500MB");
+
         // Get the file extension from the uploaded file 
         const fileExtension = file.name.substring(file.name.indexOf("."), file.name.length);
 
