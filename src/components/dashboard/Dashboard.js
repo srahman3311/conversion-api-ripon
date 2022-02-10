@@ -214,7 +214,7 @@ function Dashboard() {
             setDownloadUri(response.data);
 
         } catch(error) {
-            alert(error.response.data)
+            alert("Something went wrong")
 
         } finally {
             setLoading(false);
