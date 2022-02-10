@@ -346,7 +346,7 @@ function Dashboard() {
                                     text = "Uploading"
                                     progress = {uploadProgress} 
                                     style = {{
-                                        display: uploadProgress > 0 && uploadProgress < 100 ? "flex" : "none",
+                                        display: uploadProgress > 1 && uploadProgress < 100 ? "flex" : "none",
                                         height: "20px"
                                     }}
                                 />
