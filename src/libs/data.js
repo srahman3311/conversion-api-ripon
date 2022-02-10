@@ -25,21 +25,21 @@ export const services = [
         textIcon: "P",
         textIconBackgroundColor: "darkblue",
         title: "JPG To PDF",
-        description: "Easily convert PDF to word"
+        description: "Easily convert JPG to PDF"
     },
     {
         id: 5,
         textIcon: "P",
         textIconBackgroundColor: "purple",
         title: "Word To PDF",
-        description: "Easily convert PDF to word"
+        description: "Easily convert Word to PDF"
     },
     {
         id: 6,
         textIcon: "P",
         textIconBackgroundColor: "#325288",
         title: "Powerpoint to PDF",
-        description: "Easily convert PDF to Powerpoint"
+        description: "Easily convert Powerpoint to PDF"
     },
     {
         id: 7,
