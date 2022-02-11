@@ -1,29 +1,37 @@
 .navbar {
+    position: relative;
     width: 100%;
     background-color: #35858B;
-    padding: 1% 0%;
+    padding: 20px 0;
+}
+
+.menu_icon {
+    position: absolute;
+    right: 20px;
+    top: 40px;
+    transform: translate(0%, -50%);
+    display: none;
 }
 
 .navbar_content {
-    width: 90%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: auto;
+    padding: 0 4%;
 }
 
 .navbar a {
     text-decoration: none;
     color: white;
     font-size: 1.2rem;
+    padding: 0px 10px;
+    transition: 0.8s;
 }
 
 .navbar a:hover {
-    color: black;
-}
-
-.navbar_routes a:first-child {
-    margin-right: 20px;
+    color: #FF6363;
 }
 
 .navbar_brand a {
@@ -32,13 +40,22 @@
 
 @media(max-width: 800px) {
 
+    .menu_icon {
+        display: block;
+    }
     .navbar_content {
+        display: block;
         width: 100%;
         justify-content: center;
-        padding: 3% 2%;
+        padding: 0 2%;
     }
-    .navbar_routes {
-        display: none;
+    .navbar a {
+        display: block;
+        padding: 15px 0px;
+    }
+    .navbar_brand a {
+        font-size: 1.8rem;
+        padding: 0;
     }
     
 }
