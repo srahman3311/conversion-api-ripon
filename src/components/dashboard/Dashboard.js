@@ -194,7 +194,8 @@ function Dashboard() {
         data.append("targetFileFormat", targetFileFormat);
 
         // const endpoint = "http://localhost:5050/convert";
-        const endpoint = "https://afternoon-chamber-07941.herokuapp.com/convert";
+        // const endpoint = "https://afternoon-chamber-07941.herokuapp.com/convert";
+        const endpoint = "https://aqueous-everglades-35035.herokuapp.com//convert";
 
         const config = {
             maxContentLength: Infinity,
